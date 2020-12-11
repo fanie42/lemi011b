@@ -4,17 +4,24 @@ package graphql
 var Schema string = `
     scalar Time
 
-    schema {
-        query: Query
-        mutation: Mutation
+    extend enum InstrumentType {
+        LEMI011B
     }
 
-    type Query {
+    type Datum {
+        timestamp: Time!
+        x: Int
+        y: Int
+        z: Int
+        temperature: Int
+    }
+
+    extend type Query {
         data(from: Time, to: Time): [Datum]
-        datum(id: ID!): Datum
+        datum(timestamp: Time): Datum
     }
 
-    type Mutation {
+    extend type Mutation {
         createDatum(input: CreateDatumInput!): Datum
         updateDatum(input: UpdateDatumInput!): Datum
         deleteDatum(id: ID!): Boolean!
@@ -36,12 +43,5 @@ var Schema string = `
         temperature: Int
     }
 
-    type Datum {
-        id: ID!
-        timestamp: Time!
-        x: Int
-        y: Int
-        z: Int
-        temperature: Int
-    }
+    
 `

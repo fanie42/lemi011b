@@ -4,11 +4,11 @@ import (
     "context"
     "net/http"
 
+    "github.com/fanie42/lemi011b"
     "github.com/fanie42/simple/domain"
     "github.com/gorilla/mux"
     "github.com/nats-io/stan.go"
 
-    "github.com/graph-gophers/graphql-go"
     gql "github.com/graph-gophers/graphql-go"
 )
 
@@ -25,8 +25,8 @@ func New(dataRepository iDataRepository) *GraphQL {
 }
 
 type dataInput struct {
-    From *graphql.Time
-    To   *graphql.Time
+    From *Time
+    To   *Time
 }
 
 // Data TODO
@@ -52,6 +52,19 @@ type createDatumInput struct {
     Temperature *int32
 }
 
+func (input createDatumInput) adapt() *domain.Datum {
+    datum := &lemi011b.Datum{
+        ID: sansa.NewUID(api, datumKind, )
+        Timestamp:   input.Timestamp,
+        X:           input.X,
+        Y:           input.Y,
+        Z:           input.Z,
+        Temperature: input.Temperature,
+    }
+
+    return &datum
+}
+
 // CreateDatum TODO
 func (r *RootResolver) CreateDatum(ctx context.Context, args struct{ Input createDatumInput }) (*datumResolver, error) {
     datum := args.Input.adapt()
@@ -69,11 +82,11 @@ func (r *RootResolver) CreateDatum(ctx context.Context, args struct{ Input creat
 }
 
 type updateDatumInput struct {
-    ID          gql.ID `json:"id"`
-    X           *int32 `json:"x"`
-    Y           *int32 `json:"y"`
-    Z           *int32 `json:"z"`
-    Temperature *int32 `json:"temperature"`
+    ID          sansa.UID
+    X           *int32
+    Y           *int32
+    Z           *int32
+    Temperature *int32
 }
 
 func (input updateDatumInput) adapt() (*domain.Datum, error) {
