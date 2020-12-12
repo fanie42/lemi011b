@@ -1,0 +1,13 @@
+---
+site: Marion
+version: 1
+logger:
+  destination: .
+serial:
+  name: ttyS0
+  baud: 19200
+stan:
+  server:
+    host: 172.18.30.100
+    port: 4222
+  cluserID: marion

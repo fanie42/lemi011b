@@ -4,15 +4,14 @@ import (
     "time"
 )
 
-// const datumKind string = 1
-
 // Datum TODO
 type Datum struct {
-    Time        time.Time `json:"time"`
-    X           *int32    `json:"x"`
-    Y           *int32    `json:"y"`
-    Z           *int32    `json:"z"`
-    Temperature *int32    `json:"temperature"`
+    Timestamp   time.Time `json:"timestamp"`
+    SensorID    sensor.ID `json:"sensor_id"`
+    X           int64     `json:"x"`
+    Y           int64     `json:"y"`
+    Z           int64     `json:"z"`
+    Temperature int64     `json:"temperature"`
 }
 
 // // Tags TODO
